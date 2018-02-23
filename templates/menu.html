@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block content %}
+{{vol}}
+
+<div class="container">
+
+<div class="container">
+  <br><br>
+  <h1>{{nome}}</h1>
+  {% for k in locale %}
+  <p>{{k.ind}},{{k.civ}}</p>
+  <p>{{k.cap}}</p>
+  <p>Tel:{{k.tel}}</p>
+
+  <p>Sitoweb: {{k.web}}</p>
+<p>cat:
+  {% for j in k.cat %}
+  {{j}}
+  {% endfor %}
+  </p>
+  {% endfor %}
+  </div>
+
+  {% if votato %}
+  <div class="alert alert-warning">
+    <strong>Warning!!</strong>Hai già votato per qst piatto
+  </div>
+    {% endif %}
+  {% for i in menu %}
+  <div class="col-sm-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="thumbnail">
+      <img style="height: 200px; width: 100%; display: block;"
+        {% if i.image %}
+          src="/static/img/uploads/{{ i.image }}" alt="{{i.nome_p}}"
+        {% else %}
+          src="/static/img/empty.png" alt="no image"
+        {% endif %}
+        >
+        <div class="captain">
+          <h3>{{i.nome_p}}</h3>
+          <p class="text-grayed">
+          {% for ingredienti in i.ing%}
+          {{ingredienti}},
+          {% endfor %}
+          </p>
+        </div>
+        <h1 class="rating-num">{{i.rating}}<span class="glyphicon glyphicon-star"></span></h1>
+        <div>
+        <span class="glyphicon glyphicon-user"></span>
+        {{i.voti}} Totali
+        </div>
+        <form method=POST action="{{url_for('voto',nome=nome,locale=i.locale,piatto=i.nome_p)}}">
+            <div class="form-group">
+                <label for="sel1">vota:</label>
+                <select class="form-control"  id="sel1" name="voto">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+            {% if user %}
+            <button type="submit" class="btn btn-info">invia voto</button>
+            {% else %}
+            <a data-toggle="popover" data-original-title="Accedi \ Registra" data-animation="false" data-easein="Vota" href="#" class="btn btn-success" rel="popover" data-placement="top" data-content="Per votare effettua il Login o iscriviti">invia voto</a>
+            {% endif %}
+          </form>
+    </div>
+    </div>
+    {% endfor %}
+
+
+</div>
+{% endblock %}

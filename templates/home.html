@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="Home">
+
+
+  <h1>Esprimi i tuoi gusti</h1>
+  <p>Cerca nella tua citta i locali aderenti</p>
+  {%if serch%}
+  <div class="alert alert-warning">
+    <strong>Warning!!</strong>Nessun locale nella città selezionata
+  </div>
+  {%endif%}
+  <form class="form-horizontal" action="{{url_for('local')}}" method="POST">
+    <div class="form-group">
+      <label for="SerchCity">Ricerca Ristorante</label>
+      <input type="text" name="city" class="form-control" placeholder="Inserisci città">
+    </div>
+  </form>
+  {%if serchF%}
+  <div class="alert alert-warning">
+    <strong>Warning!!</strong>Nessun piatto corrispondente trovato
+  </div>
+  {%endif%}
+  <form class="form-horizontal" action="{{url_for('s_piatto')}}" method="POST">
+  <div class="form-group">
+    <label for="SerchFood">Ricerca in base al piatto desiderato</label>
+    <input type="text" name="piatto" class="form-control" placeholder="Inserisci piatto">
+  </div>
+</form>
+</div>
+
+{% endblock %}

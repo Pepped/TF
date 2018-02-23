@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+
+
+<h1>Locali</h1>
+<div id="map"style="height:300px;">
+</div>
+<script type="text/javascript">
+var map = L.map('map').setView([40.8485, 14.2735], 11);
+var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+});
+map.addLayer(layer);
+map.locate({setView: true, maxZoom: 16});
+function onLocationFound(e) {
+  var radius = e.accuracy / 2;
+
+  L.marker(e.latlng).addTo(map)
+      .bindPopup("You are within <br>" + radius + " meters from this point").openPopup();
+
+  L.circle(e.latlng, radius).addTo(map);
+}
+  map.on('locationfound', onLocationFound);
+</script>
+
+
+
+  <div class="list-group">
+
+    {% for i in locali %}
+    {%if serch_p %}
+        <a href="{{url_for('menu',locale=i.locale,nome=i.nome_l)}}" class="list-group-item">{{i.nome_l}}</a>
+    {% else %}
+
+<a href="{{url_for('menu',locale=i._id,nome=i.nome_l)}}" class="list-group-item">{{i.nome_l}}</a>
+    {% endif %}
+    <script type="text/javascript">
+      L.marker({{i.geo}}).addTo(map).bindPopup("<strong>{{i.nome_l}}</strong>").openPopup();
+    </script>
+  {% endfor %}
+</div>
+
+{% endblock %}

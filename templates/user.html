@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+
+
+  {% for i in utente %}
+  <p>Nome:{{i.username}}</p>
+  <p>email:{{i.email}}</p>
+  <p>pass: ***</p>
+  {% endfor%}
+  </div>
+  <div class="list-group">
+  {% for k in voti %}
+  <a href="{{url_for('menu',locale=k.locale,nome=k.nome_l)}}" class="list-group-item"> Hai votato {{k.nome_p}} di {{k.nome_l}} con voto {{k.voto}}</a>
+
+{% endfor %}
+</div>
+{% endblock %}

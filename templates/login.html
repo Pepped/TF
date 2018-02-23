@@ -1,0 +1,31 @@
+{%extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+  {% if fail %}
+  <div class="alert alert-danger">
+  <strong>Attenzione!</strong> Credenziali Non Valide.
+</div>
+  {% endif %}
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <form method="POST" action="{{url_for('login_exe')}}">
+        <div class="form-group">
+          <label for="Utente">Username</label>
+          <input type="text" name="username" class="form-control" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+          <label for="Password">Password</label>
+          <input type="password" name="pass" class="form-control" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">LogIn</button>
+      </form>
+      <br>
+      <div class="">
+        Non hai un account? <a href="{{url_for('register')}}">Registrati</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
